@@ -1,9 +1,13 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [ :show, :edit, :update, :destroy ]
-  before_action :require_admin, except: [ :index, :show ]
+  before_action :set_article, only: %i[ show edit update destroy publish unpublish ]
+  before_action :require_admin, except: %i[ index show ]
 
   def index
-    @articles = Article.published.recent.page(params[:page])
+    @articles = if current_user.admin?
+      Article.all.page(params[:page])
+    else
+      Article.published.recent.page(params[:page])
+    end
   end
 
   def show

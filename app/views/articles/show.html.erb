@@ -19,7 +19,7 @@
         <div class="flex flex-col gap-2">
           <!-- Publish/Unpublish Button -->
           <% if @article.published? %>
-          <%= link_to unpublish_article_path(@article), method: :patch, 
+          <%= button_to unpublish_article_path(@article), method: :patch, 
                   class: "w-12 h-12 rounded-full flex items-center justify-center transition-colors shadow-lg", 
                   style: "background-color: #f97316; color: white;",
                   title: "Unpublish Article" do %>
@@ -28,7 +28,7 @@
           </svg>
           <% end %>
           <% else %>
-          <%= link_to publish_article_path(@article), method: :patch, 
+          <%= button_to publish_article_path(@article), method: :patch, 
                   class: "w-12 h-12 rounded-full flex items-center justify-center transition-colors shadow-lg", 
                   style: "background-color: #10b981; color: white;",
                   title: "Publish Article" do %>
