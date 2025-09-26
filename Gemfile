@@ -50,7 +50,7 @@ gem "friendly_id", "~> 5.5"
 gem "kaminari", "~> 1.2"
 
 # CSS framework
-gem "tailwindcss-rails", "~> 3.0"
+gem "tailwindcss-rails", "~> 4.3"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
