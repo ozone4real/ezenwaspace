@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
   before_action :require_admin, except: %i[ index show ]
 
   def index
-    @articles = if current_user.admin?
+    @articles = if admin?
       Article.all.page(params[:page])
     else
       Article.published.recent.page(params[:page])
