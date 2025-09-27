@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     member do
       patch :publish
       patch :unpublish
+      delete "remove_image/:image_id", action: :remove_image, as: :remove_image
     end
   end
 

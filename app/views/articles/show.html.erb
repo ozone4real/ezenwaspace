@@ -19,7 +19,8 @@
         <div class="flex flex-col gap-2">
           <!-- Publish/Unpublish Button -->
           <% if @article.published? %>
-          <%= button_to unpublish_article_path(@article), method: :patch, 
+          <%= link_to unpublish_article_path(@article), method: :patch, 
+                  data: { turbo_method: :patch },
                   class: "w-12 h-12 rounded-full flex items-center justify-center transition-colors shadow-lg", 
                   style: "background-color: #f97316; color: white;",
                   title: "Unpublish Article" do %>
@@ -28,7 +29,8 @@
           </svg>
           <% end %>
           <% else %>
-          <%= button_to publish_article_path(@article), method: :patch, 
+          <%= link_to publish_article_path(@article), method: :patch, 
+                  data: { turbo_method: :patch },
                   class: "w-12 h-12 rounded-full flex items-center justify-center transition-colors shadow-lg", 
                   style: "background-color: #10b981; color: white;",
                   title: "Publish Article" do %>
@@ -50,8 +52,8 @@
           <% end %>
 
           <!-- Delete Button -->
-          <%= button_to article_path(@article), method: :delete, 
-                data: { confirm: 'Are you sure you want to delete this article?' },
+          <%= link_to article_path(@article), method: :delete, 
+                data: { confirm: 'Are you sure you want to delete this article?', turbo_method: :delete },
                 class: "w-12 h-12 bg-red-500 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg", 
                 title: "Delete Article" do %>
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

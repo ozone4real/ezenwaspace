@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: %i[ show edit update destroy publish unpublish ]
+  before_action :set_article, only: %i[ show edit update destroy publish unpublish remove_image ]
   before_action :require_admin, except: %i[ index show ]
 
   def index
@@ -33,7 +33,15 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    if @article.update(article_params)
+    # Handle images separately to prevent deletion of existing images
+    update_params = article_params.except(:images)
+
+    if @article.update(update_params)
+      # Only attach new images if they were actually selected
+      if params[:article][:images].present? && params[:article][:images].any?(&:present?)
+        @article.images.attach(params[:article][:images])
+      end
+
       redirect_to @article, notice: "Article was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -54,6 +62,15 @@ class ArticlesController < ApplicationController
     @article.update(published: false)
     redirect_to @article, notice: "Article was unpublished."
   end
+
+  def remove_image
+    image = @article.images.find(params[:image_id])
+    image.purge
+    redirect_to edit_article_path(@article), notice: "Image was removed."
+  rescue ActiveRecord::RecordNotFound
+    redirect_to edit_article_path(@article), alert: "Image not found."
+  end
+
 
   private
 
