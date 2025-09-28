@@ -58,7 +58,7 @@ trix-editor li {
 /* Fix other common elements that Tailwind resets */
 .trix-content h1,
 trix-editor h1 {
-  font-size: 2em !important;
+  font-size: 1.5em !important;
   font-weight: bold !important;
   margin: 1em 0 0.5em 0 !important;
 }
@@ -492,42 +492,42 @@ trix-editor .attachment__metadata {
   /* Headings in both editor and displayed content */
   .trix-content h1,
   trix-editor h1 {
-    font-size: 2em !important;
+    font-size: 1.5em !important;
     line-height: 1.2 !important;
     font-weight: bold !important;
     margin: 1em 0 0.5em 0 !important;
   }
   .trix-content h2,
   trix-editor h2 {
-    font-size: 1.75em !important;
+    font-size: 1.5em !important;
     line-height: 1.2 !important;
     font-weight: bold !important;
     margin: 1em 0 0.5em 0 !important;
   }
   .trix-content h3,
   trix-editor h3 {
-    font-size: 1.5em !important;
+    font-size: 1.25em !important;
     line-height: 1.2 !important;
     font-weight: bold !important;
     margin: 1em 0 0.5em 0 !important;
   }
   .trix-content h4,
   trix-editor h4 {
-    font-size: 1.25em !important;
+    font-size: 1.1em !important;
     line-height: 1.2 !important;
     font-weight: bold !important;
     margin: 1em 0 0.5em 0 !important;
   }
   .trix-content h5,
   trix-editor h5 {
-    font-size: 1.1em !important;
+    font-size: 1em !important;
     line-height: 1.2 !important;
     font-weight: bold !important;
     margin: 1em 0 0.5em 0 !important;
   }
   .trix-content h6,
   trix-editor h6 {
-    font-size: 1em !important;
+    font-size: 0.9em !important;
     line-height: 1.2 !important;
     font-weight: bold !important;
     margin: 1em 0 0.5em 0 !important;

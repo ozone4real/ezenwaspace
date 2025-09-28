@@ -1,4 +1,6 @@
 class Article < ApplicationRecord
+  WORDS_PER_MINUTE = 200
+
   extend FriendlyId
   friendly_id :title, use: :slugged
 
@@ -25,5 +27,11 @@ class Article < ApplicationRecord
     # Strip HTML tags and get plain text
     plain_text = ActionText::Content.new(content).to_plain_text
     plain_text.length > length ? "#{plain_text[0...length]}..." : plain_text
+  end
+
+  def reading_time
+    return 0 if content.blank?
+
+    (content.body.to_plain_text.split.size / WORDS_PER_MINUTE).ceil
   end
 end
