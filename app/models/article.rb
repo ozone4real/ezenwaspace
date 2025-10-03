@@ -6,6 +6,9 @@ class Article < ApplicationRecord
 
   has_rich_text :content
   has_many_attached :images
+  has_many :article_tags, autosave: true, dependent: :destroy
+  has_many :tags, through: :article_tags
+  accepts_nested_attributes_for :article_tags, allow_destroy: true
 
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: true
@@ -33,5 +36,25 @@ class Article < ApplicationRecord
     return 0 if content.blank?
 
     (content.body.to_plain_text.split.size / WORDS_PER_MINUTE).ceil
+  end
+
+  # Tag list methods for easy form handling
+  def tag_list
+    tags.pluck(:name).join(", ")
+  end
+
+  def tag_list=(names)
+    # Parse and create new tags
+    tag_names = names.to_s.split(",").map(&:strip).reject(&:blank?).uniq
+    tags_to_create = tag_names - tags.pluck(:name)
+    tags_to_destroy = tags.pluck(:name) - tag_names
+    tags_to_create.each do |name|
+      self.tags << Tag.find_or_initialize_by(name: name.downcase)
+    end
+    article_tags.each do |article_tag|
+      if tags_to_destroy.include?(article_tag.tag.name)
+        article_tag.mark_for_destruction
+      end
+    end
   end
 end

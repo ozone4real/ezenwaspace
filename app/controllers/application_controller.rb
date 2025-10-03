@@ -31,4 +31,12 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  def query(scope)
+    query_class = "#{controller_name.camelize}Query"
+    query_class.constantize.new(
+      scope,
+      request.query_parameters
+    ).call
+  end
 end

@@ -27,8 +27,49 @@
   </div>
 </div>
 
+<!-- Tags Section -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <% if Tag.exists? %>
+  <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-bold text-gray-900">Browse by Tags</h2>
+      <% if params[:tag].present? %>
+      <%= link_to articles_path, class: "text-purple-600 hover:text-purple-700 font-medium text-sm flex items-center gap-1" do %>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+      Clear filter
+      <% end %>
+      <% end %>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <% Tag.joins(:articles).group('tags.id').order('COUNT(articles.id) DESC').limit(20).each do |tag| %>
+      <% article_count = tag.articles.count %>
+      <%= link_to articles_path(tag: tag.name), 
+          class: "inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 #{params[:tag] == tag.name ? 'bg-purple-600 text-white shadow-lg' : 'bg-purple-100 text-purple-700 hover:bg-purple-200'}" do %>
+      #<%= tag.name %>
+      <span class="text-xs <%= params[:tag] == tag.name ? 'text-purple-200' : 'text-purple-500' %>">
+        <%= article_count %>
+      </span>
+      <% end %>
+      <% end %>
+    </div>
+
+    <% if params[:tag].present? %>
+    <div class="mt-4 pt-4 border-t border-gray-200">
+      <p class="text-sm text-gray-600">
+        Showing articles tagged with
+        <span class="font-semibold text-purple-600">#<%= params[:tag] %></span>
+      </p>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
 <!-- Articles Grid -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 lg:pb-16">
   <% if @articles.any? %>
   <div class="grid gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
     <% @articles.each_with_index do |article, index| %>
@@ -124,6 +165,11 @@
         <h3 class="text-xl font-bold mb-3 text-gray-900 group-hover:text-purple-600 transition-colors leading-tight">
           <%= link_to article.title, article_path(article) %>
         </h3>
+
+        <!-- Tags -->
+        <% if article.tags.any? %>
+        <%= render "articles/tag", article: article %>
+        <% end %>
 
         <p class="text-gray-600 mb-4 leading-relaxed text-sm">
           <%= article.excerpt(100) %>

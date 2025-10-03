@@ -98,9 +98,18 @@
           </div>
 
           <!-- Article Title -->
-          <h1 class="text-4xl lg:text-5xl font-black text-gray-900 mb-6 leading-tight">
+          <h1 class="text-4xl lg:text-5xl font-black text-gray-900 mb-4 leading-tight">
             <%= @article.title %>
           </h1>
+
+          <!-- Tags -->
+          <% if @article.tags.any? %>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <% @article.tags.each do |tag| %>
+            <%= render "articles/tag", article: @article %>
+            <% end %>
+          </div>
+          <% end %>
         </header>
 
         <!-- Article Body -->

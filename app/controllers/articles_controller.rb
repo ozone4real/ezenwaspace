@@ -3,11 +3,7 @@ class ArticlesController < ApplicationController
   before_action :require_admin, except: %i[ index show ]
 
   def index
-    @articles = if admin?
-      Article.all.page(params[:page])
-    else
-      Article.published.recent.page(params[:page])
-    end
+    @articles = query(scope)
   end
 
   def show
@@ -79,6 +75,14 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :published, :published_at, :content, images: [])
+    params.require(:article).permit(:title, :published, :published_at, :content, :tag_list, images: [])
+  end
+
+  def scope
+    if admin?
+      Article.includes(:tags)
+    else
+      Article.published.recent.includes(:tags)
+    end
   end
 end
