@@ -44,13 +44,12 @@
     </div>
 
     <div class="flex flex-wrap gap-2">
-      <% Tag.joins(:articles).group('tags.id').order('COUNT(articles.id) DESC').limit(20).each do |tag| %>
-      <% article_count = tag.articles.count %>
+      <% Tag.select('tags.*, COUNT(articles.id) as article_count').joins(:articles).group('tags.id').order('COUNT(articles.id) DESC').limit(20).each do |tag| %>
       <%= link_to articles_path(tag: tag.name), 
           class: "inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 #{params[:tag] == tag.name ? 'bg-purple-600 text-white shadow-lg' : 'bg-purple-100 text-purple-700 hover:bg-purple-200'}" do %>
       #<%= tag.name %>
       <span class="text-xs <%= params[:tag] == tag.name ? 'text-purple-200' : 'text-purple-500' %>">
-        <%= article_count %>
+        <%= tag.article_count %>
       </span>
       <% end %>
       <% end %>
@@ -168,7 +167,9 @@
 
         <!-- Tags -->
         <% if article.tags.any? %>
-        <%= render "articles/tag", article: article %>
+        <div class="flex flex-wrap gap-2 mb-3">
+          <%= render partial: "articles/tag", collection: article.tags.limit(3) %>
+        </div>
         <% end %>
 
         <p class="text-gray-600 mb-4 leading-relaxed text-sm">

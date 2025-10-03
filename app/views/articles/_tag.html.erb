@@ -1,16 +1,5 @@
-<div class="flex flex-wrap gap-1 mb-3">
-  <% article.tags.limit(3).each do |tag| %>
-  <%= link_to articles_path(tag: tag.name), class: "px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full" do %>
-  <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">
-    #<%= tag.name %>
-  </span>
-  <% end %>
-  <% end %>
-  <% if article.tags.count > 3 %>
-  <%= link_to articles_path(tag: article.tags.limit(3).last.name), class: "px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full" do %>
-  <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full">
-    +<%= article.tags.count - 3 %> more
-  </span>
-  <% end %>
-  <% end %>
-</div>
+<%# Single tag component: expects local `tag:` %>
+<%= link_to articles_path(tag: tag.name), 
+    class: "px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full hover:bg-purple-200 transition-colors" do %>
+#<%= tag.name %>
+<% end %>
