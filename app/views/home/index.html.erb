@@ -67,49 +67,6 @@
   </div>
 </div>
 
-<!-- Popular Tags Section -->
-<div class="bg-gradient-to-br from-gray-50 to-purple-50 py-12 lg:py-16">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <% if Tag.exists? %>
-    <div class="text-center mb-8 lg:mb-12">
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-4">
-        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Topics</span>
-      </h2>
-      <p class="text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-        Discover articles by the topics that interest you most
-      </p>
-    </div>
-
-    <div class="bg-white rounded-3xl shadow-xl p-8 lg:p-12">
-      <div class="flex flex-wrap gap-3 justify-center">
-        <% Tag.select('tags.*, COUNT(articles.id) as article_count').joins(:articles).where(articles: { published: true }).group('tags.id').order('COUNT(articles.id) DESC').limit(15).each do |tag| %>
-        <%= link_to articles_path(tag: tag.name), 
-            class: "group inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 rounded-full text-sm font-semibold hover:from-purple-200 hover:to-pink-200 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg" do %>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-        </svg>
-        <%= tag.name %>
-        <span class="text-xs bg-purple-200 text-purple-600 px-2 py-1 rounded-full">
-          <%= tag.article_count %>
-        </span>
-        <% end %>
-        <% end %>
-      </div>
-
-      <div class="text-center mt-8">
-        <%= link_to articles_path, 
-            class: "inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg" do %>
-        View All Articles
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-        </svg>
-        <% end %>
-      </div>
-    </div>
-    <% end %>
-  </div>
-</div>
-
 <!-- Recent Articles Section -->
 <div class="bg-white py-12 lg:py-20">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -194,6 +151,49 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
       </svg>
       <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Popular Tags Section -->
+<div class="bg-gradient-to-br from-gray-50 to-purple-50 py-12 lg:py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <% if Tag.exists? %>
+    <div class="text-center mb-8 lg:mb-12">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-4">
+        Explore <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Topics</span>
+      </h2>
+      <p class="text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-4">
+        Discover articles by the topics that interest you most
+      </p>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-xl p-8 lg:p-12">
+      <div class="flex flex-wrap gap-3 justify-center">
+        <% Tag.select('tags.*, COUNT(articles.id) as article_count').joins(:articles).where(articles: { published: true }).group('tags.id').order('COUNT(articles.id) DESC').limit(15).each do |tag| %>
+        <%= link_to articles_path(tag: tag.name), 
+            class: "group inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 rounded-full text-sm font-semibold hover:from-purple-200 hover:to-pink-200 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg" do %>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+        </svg>
+        <%= tag.name %>
+        <span class="text-xs bg-purple-200 text-purple-600 px-2 py-1 rounded-full">
+          <%= tag.article_count %>
+        </span>
+        <% end %>
+        <% end %>
+      </div>
+
+      <div class="text-center mt-8">
+        <%= link_to articles_path, 
+            class: "inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg" do %>
+        View All Articles
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+        <% end %>
+      </div>
     </div>
     <% end %>
   </div>
